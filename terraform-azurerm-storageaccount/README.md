@@ -1,60 +1,58 @@
-# Introduction
-- Managing resources in Azure efficiently often requires using a storage account with standardized naming conventions.
-- This Terraform module helps in automating the creation of an Azure Storage Account with a consistent naming pattern.
-- By using this module, you can ensure that your storage accounts are named correctly based on the environment, project, and region.
-- This module is designed to be integrated easily into your CI/CD pipelines, making it simple to manage your infrastructure as code.
+<!-- BEGIN_TF_DOCS -->
+# terraform-azurerm-storage-account
 
-# What is an Azure Storage Account?
+## Introduction
+- This Terraform module facilitates the creation of an Azure Storage Account with standardized configurations.
+- The module allows the user to define key parameters for the Storage Account, making it easier to manage and maintain.
+- It supports specifying key attributes such as replication, access tier, and storage account type, ensuring that resources are deployed as per project requirements.
 
-- An Azure Storage Account is a fundamental resource in Microsoft Azure that provides a unique namespace in which you can store and access your data objects. Azure Storage offers highly available, massively scalable, durable, and secure storage for a variety of data objects. Azure Storage supports multiple data types and services, including:
+## Requirements
 
-`Blob Storage` : Optimized for storing massive amounts of unstructured data, such as text or binary data.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | 1.6.6 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 2.42.0 |
 
-`File Storage` : Provides managed file shares in the cloud that can be accessed via the SMB protocol.
+## Providers
 
-`Queue Storage` : Enables reliable messaging between application components.
+| Name | Version |
+|------|---------|
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 2.42.0 |
 
-`Table Storage` : Stores structured NoSQL data in the cloud, providing a key/attribute store with a schema-less design.
+## Modules
 
-`Disk Storage` : Provides persistent, durable, and high-performance storage for Azure virtual machines.
+No modules.
 
-# Azure Storage Account Module
+## Resources
 
-This is the Terraform script to create a Storage Account using modules, which provides a flexible way to set its name based on specified variables.
+| Name | Type |
+|------|------|
+| [azurerm_storage_account.storage](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) | resource |
+| [azurerm_storage_container.container](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container) | resource |
 
-# Folder structure 
-```
-├── README.md
-├── main.tf
-├── locals.tf
-├── outputs.tf
-├── variables.tf
-│     
-└── test
-    ├── main.tf
-    ├── variables.tf
-    └── versions.tf
+## Inputs
 
-```
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_location"></a> [location](#input\_location) | (Required) The Azure Region where the Storage Account should be created. | `string` | n/a | yes |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | (Required) The name of the Resource Group where the Storage Account will be created. | `string` | n/a | yes |
+| <a name="input_account_tier"></a> [account\_tier](#input\_account\_tier) | (Required) The performance tier of the Storage Account. Options are `Standard` or `Premium`. | `string` | `"Standard"` | no |
+| <a name="input_replication_type"></a> [replication\_type](#input\_replication\_type) | (Required) The replication type of the Storage Account. Options include `LRS`, `GRS`, `RAGRS`, and `ZRS`. | `string` | `"LRS"` | no |
+| <a name="input_access_tier"></a> [access\_tier](#input\_access\_tier) | (Optional) The access tier for the storage account. Options are `Hot` or `Cool`. | `string` | `"Hot"` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | (Optional) A mapping of tags to assign to the Storage Account. | `map(string)` | `{}` | no |
 
-# Usage 
-1. `Initialize Terraform` : Navigate to the test folder and run below command. This Initializes the terraform process.
+## Outputs
 
-```
-terraform init
-```
-2. `Validate Terraform` : Navigate to the test folder and run below command. This validates our terraform code.
+| Name | Description |
+|------|-------------|
+| <a name="output_id"></a> [id](#output\_id) | The ID of the Storage Account. |
+| <a name="output_primary_blob_endpoint"></a> [primary\_blob\_endpoint](#output\_primary\_blob\_endpoint) | The primary Blob service endpoint of the Storage Account. |
+| <a name="output_name"></a> [name](#output\_name) | The name of the Storage Account. |
 
-```
-terraform validate
-```
-3. `Planning Terraform` : Navigate to the test folder and run below command. This gives a proper plan for resources to be created. 
+## Tests
 
-```
-terraform plan
-```
-4. `Apply Configuration` : Navigate to the test folder and run below command. Apply the configuration to create the resource group.
+- This module includes automated tests to validate its functionality.
+- To run the tests, initialize Terraform using `terraform init`, then execute `terraform test` in the root directory.
+- Additional test scenarios will be updated here as required.
 
-```
-terraform apply
-```
+<!-- END_TF_DOCS -->
