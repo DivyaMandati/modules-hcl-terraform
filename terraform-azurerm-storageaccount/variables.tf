@@ -1,48 +1,54 @@
-# Variable for resource group name
+variable "environment" {
+  type        = string
+  description = "(Required) custom variable. This is the environment name where the storage account will be created."
+
+  validation {
+    condition     = var.environment == "dev" || var.environment == "npa" || var.environment == "stg" || var.environment == "prod"
+    error_message = "Invalid environment name. Should be one of these - dev, npa, prod, stg"
+  }
+}
+
+variable "main_project" {
+  type        = string
+  description = "(Required) custom variable. main project name (lowercase letters and numbers only)"
+  
+  validation {
+    condition     = can(regex("^[a-z0-9]+$", var.main_project))
+    error_message = "main_project must be lowercase letters and numbers only."
+  }
+}
+
+variable "sub_project" {
+  type        = string
+  description = "(Required) custom variable. sub project name (lowercase letters and numbers only)"
+  
+  validation {
+    condition     = can(regex("^[a-z0-9]+$", var.sub_project))
+    error_message = "sub_project must be lowercase letters and numbers only."
+  }
+}
+
 variable "resource_group_name" {
-  description = "The name of the resource group in which to create the storage account."
   type        = string
+  description = "(Required) The name of the Resource Group where the storage account will be created."
 }
 
-# Variable for location
 variable "location" {
-  description = "The Azure location where the storage account will be created."
   type        = string
+  description = "(Required) The Azure Region where the Storage Account should exist. Changing this forces a new Storage Account to be created."
 }
 
-# Variable for storage account name
-variable "storage_account_name" {
-  description = "The name of the storage account."
-  type        = string
-}
-
-# Variable for account tier (Standard, Premium)
 variable "account_tier" {
-  description = "The performance tier of the storage account."
   type        = string
+  description = "(Required) The tier of the storage account. Options: Standard, Premium."
 }
 
-# Variable for replication type (LRS, GRS, RA-GRS, etc.)
 variable "account_replication_type" {
-  description = "The replication type of the storage account."
   type        = string
+  description = "(Required) The replication type for the storage account. Options: LRS, GRS, RA-GRS, etc."
 }
 
-# Variable for blob container name
-variable "container_name" {
-  description = "The name of the blob container."
-  type        = string
-}
-
-# Variable for blob container access type
-variable "container_access_type" {
-  description = "The access level of the blob container (private, blob, or container)."
-  type        = string
-  default     = "private"
-}
-
-# Variable for tags
 variable "tags" {
-  description = "Tags to apply to the resources."
   type        = map(string)
+  description = "(Optional) A mapping of tags which should be assigned to the Storage Account."
 }

@@ -1,0 +1,11 @@
+formatter: markdown
+
+header-from: docs/header.md
+footer-from: docs/footer.md
+
+output:
+  file: README.md
+
+sort:
+  enabled: true
+  by: required

@@ -1,0 +1,2 @@
+# Azure Storage Account Module
+- This folder contains a module for implementing an Azure Storage Account. The module abstracts naming conventions and provides validation for resource arguments, ensuring that the storage account is configured correctly based on organizational standards.
